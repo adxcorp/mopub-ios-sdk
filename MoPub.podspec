@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.author             = { "Eleanor Choi" => "khchoi@adxcorp.kr" }
 
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "ttps://github.com/adxcorp/mopub-ios-sdk", : commit => '5641d23' }
+  s.source       = { :git => "https://github.com/adxcorp/mopub-ios-sdk", :commit => 'e582650' }
 
   s.source_files  = "Classes", "Classes/**/*.{h,m}"
   s.exclude_files = "Classes/Exclude"
