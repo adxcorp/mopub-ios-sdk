@@ -97,7 +97,9 @@ static const CGFloat kRetryIntervalBackoffMultiplier = 2.0;
     NSURLSessionTask * task = [MPHTTPNetworkSession startTaskWithHttpRequest:request responseHandler:^(NSData * _Nonnull data, NSHTTPURLResponse * _Nonnull response) {
         __typeof__(self) strongSelf = weakSelf;
         
-        [strongSelf parsePositioningData:data];
+        if (strongSelf != nil) {
+            [strongSelf parsePositioningData:data];
+        }
     } errorHandler:^(NSError * _Nonnull error) {
         __typeof__(self) strongSelf = weakSelf;
         
