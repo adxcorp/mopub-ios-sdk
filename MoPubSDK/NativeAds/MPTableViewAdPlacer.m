@@ -103,6 +103,11 @@ static NSString * const kTableViewAdPlacerReuseIdentifier = @"MPTableViewAdPlace
 
 - (void)adPlacer:(MPStreamAdPlacer *)adPlacer didLoadAdAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!(indexPath.section<[self.tableView numberOfSections] &&
+          indexPath.row<[self.tableView numberOfRowsInSection:indexPath.section])) {
+        return;
+    }
+    
     BOOL originalAnimationsEnabled = [UIView areAnimationsEnabled];
     //We only want to enable animations if the index path is before or within our visible cells
     BOOL animationsEnabled = ([(NSIndexPath *)[self.tableView.indexPathsForVisibleRows lastObject] compare:indexPath] != NSOrderedAscending) && originalAnimationsEnabled;
