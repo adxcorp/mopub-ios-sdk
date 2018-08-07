@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   s.name         = "mopub-ios-sdk"
   s.module_name  = "MoPub"
-  s.version      = "5.2.0.1"
+  s.version      = "5.2.0.2"
   s.summary      = "ADX MoPub"
 
   s.description  = <<-DESC

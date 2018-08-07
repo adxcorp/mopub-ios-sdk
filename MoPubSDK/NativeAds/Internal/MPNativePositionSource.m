@@ -96,17 +96,23 @@ static const CGFloat kRetryIntervalBackoffMultiplier = 2.0;
     __weak __typeof__(self) weakSelf = self;
     NSURLSessionTask * task = [MPHTTPNetworkSession startTaskWithHttpRequest:request responseHandler:^(NSData * _Nonnull data, NSHTTPURLResponse * _Nonnull response) {
         __typeof__(self) strongSelf = weakSelf;
-
-        [strongSelf parsePositioningData:data];
+        
+        if (strongSelf != nil) {
+            [strongSelf parsePositioningData:data];
+        }
     } errorHandler:^(NSError * _Nonnull error) {
         __typeof__(self) strongSelf = weakSelf;
-
-        if (strongSelf.retryInterval >= strongSelf.maximumRetryInterval) {
-            strongSelf.completionHandler(nil, error);
-            strongSelf.completionHandler = nil;
-        } else {
-            [strongSelf performSelector:@selector(retryLoadingPositions) withObject:nil afterDelay:strongSelf.retryInterval];
-            strongSelf.retryInterval = MIN(strongSelf.retryInterval * kRetryIntervalBackoffMultiplier, strongSelf.maximumRetryInterval);
+        
+        if (strongSelf != nil) {
+            if (strongSelf.retryInterval >= strongSelf.maximumRetryInterval) {
+                if (strongSelf.completionHandler != nil) {
+                    strongSelf.completionHandler(nil, error);
+                    strongSelf.completionHandler = nil;
+                }
+            } else {
+                [strongSelf performSelector:@selector(retryLoadingPositions) withObject:nil afterDelay:strongSelf.retryInterval];
+                strongSelf.retryInterval = MIN(strongSelf.retryInterval * kRetryIntervalBackoffMultiplier, strongSelf.maximumRetryInterval);
+            }
         }
     }];
 
